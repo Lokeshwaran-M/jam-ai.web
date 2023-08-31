@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Record Audio</title>
+  </head>
+  <body>
+    <button
+      id="record-button"
+      onpointerup="startRecording()"
+      onpointerdown="stopRecording()"
+      <!-- onmousedown="startRecording()"
+      onmouseup="stopRecording()"
+      ontouchstart="startRecording()"
+      ontouchend="stopRecording()" -->
+    >
+      Record
+    </button>
+    <script>
+      var chunks = [];
+      var mediaRecorder;
+
+      function startRecording() {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then(function (stream) {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            mediaRecorder.ondataavailable = function (e) {
+              chunks.push(e.data);
+            };
+          }).then(console.log("audio reorded"));
+          
+      }
+
+      function stopRecording() {
+        mediaRecorder.stop();
+        mediaRecorder.onstop = function () {
+          var blob = new Blob(chunks, { type: "audio/wav; codecs=opus" });
+          chunks = [];
+          var formData = new FormData();
+          formData.append("audio_data", blob);
+          console.log(formData)
+          fetch("/start-recording", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error(error));
+        };
+      }
+    </script>
+  </body>
+</html>
