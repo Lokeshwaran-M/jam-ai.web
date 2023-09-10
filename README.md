@@ -1,4 +1,4 @@
-# jam-ai.web
+# jam-ai.web (m1-main-stable)
 
 A web client for [Jam AI](https://github.com/Lokeshwaran-M/Jam-AI) 
 
