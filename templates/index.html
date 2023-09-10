@@ -1,17 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Record Audio</title>
-  </head>
-  <body>
-    <button id="start-btn">Start Recording</button>
-    <button id="stop-btn">Stop Recording</button>
-    <script src="static/js/recorder.js"></script>
-
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -64,7 +50,7 @@
               if (response.ok) {
                 const data = await response.json();
                 console.log(data.res);
-                document.write(data.res)
+                document.write(data.res);
               } else {
                 console.log("Request failed with status:", response.status);
               }
